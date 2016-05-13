@@ -1,0 +1,107 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.realm:realm-gradle-plugin:0.90.1"
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+apply plugin: 'me.tatarka.retrolambda'
+
+def versionMajor = 0
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = 0
+
+android {
+
+    signingConfigs {
+        release {
+            keyAlias 'TestReleaseKey'
+            keyPassword 'TestReleaseKey'
+            storeFile file("${rootDir}/TestReleaseKey.jks")
+            storePassword 'TestReleaseKey'
+        }
+    }
+
+    compileSdkVersion 23
+    buildToolsVersion '24.0.0 rc3'
+
+    defaultConfig {
+        applicationId "ru.annin.vtuz_pris_store"
+        minSdkVersion 21
+        targetSdkVersion 23
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}" + (versionPatch == 0 ? "" : ".${versionPatch}")
+        resConfigs "en", "ru"
+    }
+
+    buildTypes {
+        debug { versionNameSuffix "D" }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'arm', 'arm-v7a', 'arm64', 'mips', 'x86', 'x86_64'
+            universalApk true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        incremental true
+        preDexLibraries true
+        javaMaxHeapSize "4G"
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals("release")) { // Only Release
+            File outDir = file("${rootDir}/out")
+            if (!outDir.exists()) { outDir.mkdirs() }
+            variant.assemble.doLast {
+                variant.outputs.each { output ->
+                    File apkFile = output.outputFile
+                    def abi = output.getFilter(com.android.build.OutputFile.ABI)
+                    if (abi == null) { abi = "universal" }
+                    copy {
+                        from apkFile
+                        into outDir
+                        rename { fileName -> "store_v${variant.versionName}_${abi}.apk" }
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    // Android Support
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+
+    // Rx
+    compile 'io.reactivex:rxjava:1.1.3'
+    compile 'io.reactivex:rxandroid:1.1.0'
+
+    // Test
+    testCompile 'junit:junit:4.12'
+}
