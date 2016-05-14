@@ -68,6 +68,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".presentation.ui.activity.EmployeeActivity"
+            android:label="@string/activity_employee"
+            android:theme="@style/Store.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

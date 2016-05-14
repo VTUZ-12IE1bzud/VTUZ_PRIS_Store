@@ -23,6 +23,11 @@
             android:icon="@drawable/ic_nav_book"
             android:title="@string/nav_organization_units" />
 
+        <item
+            android:id="@+id/action_nav_employees"
+            android:icon="@drawable/ic_nav_book"
+            android:title="@string/nav_employee" />
+
     </group>
 
 </menu>

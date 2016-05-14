@@ -11,5 +11,6 @@ public interface MainView {
     void onJobPositionsOpen();
     void onTypeOrganizationUnitsOpen();
     void onOrganizationUnitsOpen();
+    void onEmployeesOpen();
 
 }

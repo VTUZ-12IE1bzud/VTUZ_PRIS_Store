@@ -45,4 +45,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     public void onOrganizationUnitsOpen() {
         navigator.navigate2OrganizationUnits(this);
     }
+
+    @Override
+    public void onEmployeesOpen() {
+        navigator.navigate2Employees(this);
+    }
 }
