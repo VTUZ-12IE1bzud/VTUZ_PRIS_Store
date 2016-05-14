@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Склад</string>
+
+    <!-- Global -->
+    <string name="app_name">Склад (ПрИС)</string>
+    <string name="msg_list_empty">Список пуст</string>
+
+    <!-- Activity's -->
+    <string name="activity_units">Единицы измерения</string>
+
+    <!-- Navigation's -->
+    <string name="nav_drawer_open">Отркыть меню</string>
+    <string name="nav_drawer_close">Закрыть меню</string>
+    <string name="nav_units">@string/activity_units</string>
+
+    <!-- Units -->
+    <string name="item_unit_list_format">%1$s (%2$s)</string>
+
 </resources>

@@ -1,3 +1,7 @@
 <resources>
 
+    <style name="Store.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Store.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

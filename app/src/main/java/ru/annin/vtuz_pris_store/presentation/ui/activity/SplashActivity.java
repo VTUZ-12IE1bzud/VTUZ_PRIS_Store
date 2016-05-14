@@ -1,10 +1,8 @@
 package ru.annin.vtuz_pris_store.presentation.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import ru.annin.vtuz_pris_store.presentation.common.BaseActivity;
-import ru.annin.vtuz_pris_store.presentation.common.BasePresenter;
 
 /**
  * <p>Стартовый экран.</p>
@@ -18,11 +16,5 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         navigator.navigate2Main(this);
         finish();
-    }
-
-    @Nullable
-    @Override
-    public BasePresenter createPresenter() {
-        return null;
     }
 }

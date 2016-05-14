@@ -1,6 +1,5 @@
 package ru.annin.vtuz_pris_store.presentation.common;
 
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -19,12 +18,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     public BaseActivity() {
         navigator = new Navigator();
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = createPresenter();
     }
 
     @Override
@@ -51,6 +44,4 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
     }
 
-    @Nullable
-    public abstract P createPresenter();
 }

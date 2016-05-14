@@ -15,5 +15,6 @@ public class StoreApplication extends Application {
     public void onCreate() {
         super.onCreate();
         RealmUtil.initialize(this);
+        RealmUtil.defaultData(this);
     }
 }

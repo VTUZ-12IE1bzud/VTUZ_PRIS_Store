@@ -1,7 +1,11 @@
 package ru.annin.vtuz_pris_store.presentation.navigation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+
+import ru.annin.vtuz_pris_store.presentation.ui.activity.MainActivity;
+import ru.annin.vtuz_pris_store.presentation.ui.activity.UnitActivity;
 
 /**
  * <p>Класс, обеспечивающий навигацию по приложению.</p>
@@ -11,8 +15,12 @@ import android.support.annotation.NonNull;
 public class Navigator {
 
     public void navigate2Main(@NonNull Context ctx) {
-//        Intent intent = new Intent(ctx, );
-//        ctx.startActivity(intent);
+        Intent intent = new Intent(ctx, MainActivity.class);
+        ctx.startActivity(intent);
     }
 
+    public void navigate2Units(@NonNull Context ctx) {
+        Intent intent = new Intent(ctx, UnitActivity.class);
+        ctx.startActivity(intent);
+    }
 }

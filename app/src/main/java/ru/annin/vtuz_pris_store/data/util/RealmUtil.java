@@ -8,6 +8,8 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmSchema;
+import ru.annin.vtuz_pris_store.R;
+import ru.annin.vtuz_pris_store.domain.model.UnitModel;
 
 /**
  * <p>Утилитарный класс, взаимодействия с {@link io.realm.Realm}.</p>
@@ -35,6 +37,11 @@ public class RealmUtil {
     @NonNull
     public static Realm getRealm() {
         return Realm.getDefaultInstance();
+    }
+
+    public static void defaultData(@NonNull Context ctx) {
+        final String unitJson = ctx.getString(R.string.default_units);
+        getRealm().executeTransactionAsync(realm -> {realm.createOrUpdateAllFromJson(UnitModel.class, unitJson);});
     }
 
     private static class Migration implements RealmMigration {
