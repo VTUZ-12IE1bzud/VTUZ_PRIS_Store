@@ -9,5 +9,6 @@ public interface MainView {
 
     void onUnitsOpen();
     void onJobPositionsOpen();
+    void onTypeOrganizationUnitsOpen();
 
 }

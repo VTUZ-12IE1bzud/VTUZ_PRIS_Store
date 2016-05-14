@@ -48,6 +48,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".presentation.ui.activity.TypeOrganizationUnitActivity"
+            android:label="@string/activity_type_organization_units"
+            android:theme="@style/Store.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

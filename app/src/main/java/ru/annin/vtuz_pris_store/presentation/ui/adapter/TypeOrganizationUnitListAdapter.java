@@ -7,24 +7,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ru.annin.vtuz_pris_store.R;
-import ru.annin.vtuz_pris_store.domain.model.JobPositionModel;
+import ru.annin.vtuz_pris_store.domain.model.TypeOrganizationUnitModel;
 
 /**
- * <p>Адаптер "Должностей сотрудников".</p>
+ * <p>Адаптер "Типы подразделений предприятия".</p>
  *
  * @author Pavel Annin, 2016.
  */
-public class JobPositionListAdapter extends RealmRecyclerAdapter<JobPositionModel, JobPositionListAdapter.ItemViewHolder> {
+public class TypeOrganizationUnitListAdapter extends RealmRecyclerAdapter<TypeOrganizationUnitModel,
+        TypeOrganizationUnitListAdapter.ItemViewHolder> {
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View vItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_job_position_list, parent, false);
+        final View vItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_type_organization_unit_list, parent, false);
         return new ItemViewHolder(vItem);
     }
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        final JobPositionModel model = realmResults.get(position);
+        final TypeOrganizationUnitModel model = realmResults.get(position);
         if (model != null && model.isValid()) {
             holder.showName(model.getName());
         }
