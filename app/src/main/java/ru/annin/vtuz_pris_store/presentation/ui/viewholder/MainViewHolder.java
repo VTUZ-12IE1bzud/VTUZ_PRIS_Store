@@ -63,6 +63,9 @@ public class MainViewHolder extends BaseViewHolder {
                 case R.id.action_nav_type_organization_units:
                     listener.onNavTypeOrganizationUnitClick();
                     break;
+                case R.id.action_nav_organization_units:
+                    listener.onNavOrganizationUnitClick();
+                    break;
                 default: break;
             }
         }
@@ -72,5 +75,6 @@ public class MainViewHolder extends BaseViewHolder {
         void onNavUnitClick();
         void onNavJobPositionClick();
         void onNavTypeOrganizationUnitClick();
+        void onNavOrganizationUnitClick();
     }
 }

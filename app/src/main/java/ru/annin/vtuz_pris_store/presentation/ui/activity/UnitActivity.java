@@ -21,7 +21,7 @@ public class UnitActivity extends BaseActivity<UnitPresenter> implements UnitVie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unit);
-        UnitViewHolder viewHolder = new UnitViewHolder(findViewById(android.R.id.content));
+        UnitViewHolder viewHolder = new UnitViewHolder(findViewById(R.id.main));
         presenter = new UnitPresenter(new UnitRepositoryImpl());
         presenter.setViewHolder(viewHolder);
         presenter.setView(this);

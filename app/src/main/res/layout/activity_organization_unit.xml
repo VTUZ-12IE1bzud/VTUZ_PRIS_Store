@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".presentation.ui.activity.JobPositionActivity">
+    tools:context=".presentation.ui.activity.OrganizationUnitActivity">
 
-    <include layout="@layout/content_job_position" />
+    <include layout="@layout/content_organization_unit" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_nav_back"
             app:popupTheme="@style/Store.PopupOverlay"
-            app:title="@string/activity_job_positions"
+            app:title="@string/activity_organization_units"
             app:titleTextColor="@color/text" />
 
     </android.support.design.widget.AppBarLayout>

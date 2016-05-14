@@ -8,6 +8,7 @@
     <string name="activity_units">Единицы измерения</string>
     <string name="activity_job_positions">Должности сотрудников</string>
     <string name="activity_type_organization_units">Типы подразделений</string>
+    <string name="activity_organization_units">Подразделения</string>
 
     <!-- Navigation's -->
     <string name="nav_drawer_open">Отркыть меню</string>
@@ -15,6 +16,7 @@
     <string name="nav_units">@string/activity_units</string>
     <string name="nav_job_positions">@string/activity_job_positions</string>
     <string name="nav_type_organization_units">@string/activity_type_organization_units</string>
+    <string name="nav_organization_units">@string/activity_organization_units</string>
 
     <!-- Units -->
     <string name="item_unit_list_format">%1$s (%2$s)</string>

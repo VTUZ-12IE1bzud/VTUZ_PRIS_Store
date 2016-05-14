@@ -21,7 +21,7 @@ public class JobPositionActivity extends BaseActivity<JobPositionPresenter> impl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_position);
-        JobPositionViewHolder viewHolder = new JobPositionViewHolder(findViewById(android.R.id.content));
+        JobPositionViewHolder viewHolder = new JobPositionViewHolder(findViewById(R.id.main));
         presenter = new JobPositionPresenter(new JobPositionRepositoryImpl());
         presenter.setViewHolder(viewHolder);
         presenter.setView(this);

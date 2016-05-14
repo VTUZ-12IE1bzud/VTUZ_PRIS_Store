@@ -45,5 +45,12 @@ public class MainPresenter extends BasePresenter<MainViewHolder, MainView> {
                 view.onTypeOrganizationUnitsOpen();
             }
         }
+
+        @Override
+        public void onNavOrganizationUnitClick() {
+            if (view != null) {
+                view.onOrganizationUnitsOpen();
+            }
+        }
     };
 }

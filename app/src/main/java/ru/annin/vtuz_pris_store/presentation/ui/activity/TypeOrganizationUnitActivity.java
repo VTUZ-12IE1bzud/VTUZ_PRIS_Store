@@ -22,7 +22,7 @@ public class TypeOrganizationUnitActivity extends BaseActivity<TypeOrganizationU
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_organization_unit);
-        TypeOrganizationUnitViewHolder viewHolder = new TypeOrganizationUnitViewHolder(findViewById(android.R.id.content));
+        TypeOrganizationUnitViewHolder viewHolder = new TypeOrganizationUnitViewHolder(findViewById(R.id.main));
         presenter = new TypeOrganizationUnitPresenter(new TypeOrganizationUnitRepositoryImpl());
         presenter.setViewHolder(viewHolder);
         presenter.setView(this);
