@@ -57,6 +57,9 @@ public class MainViewHolder extends BaseViewHolder {
                 case R.id.action_nav_units:
                     listener.onNavUnitClick();
                     break;
+                case R.id.action_nav_job_posotions:
+                    listener.onNavJobPositionClick();
+                    break;
                 default: break;
             }
         }
@@ -64,5 +67,6 @@ public class MainViewHolder extends BaseViewHolder {
 
     public interface OnInteractionListener {
         void onNavUnitClick();
+        void onNavJobPositionClick();
     }
 }

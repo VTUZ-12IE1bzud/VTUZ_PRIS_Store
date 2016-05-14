@@ -9,6 +9,7 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmSchema;
 import ru.annin.vtuz_pris_store.R;
+import ru.annin.vtuz_pris_store.domain.model.JobPositionModel;
 import ru.annin.vtuz_pris_store.domain.model.UnitModel;
 
 /**
@@ -41,7 +42,11 @@ public class RealmUtil {
 
     public static void defaultData(@NonNull Context ctx) {
         final String unitJson = ctx.getString(R.string.default_units);
-        getRealm().executeTransactionAsync(realm -> {realm.createOrUpdateAllFromJson(UnitModel.class, unitJson);});
+        final String jobPositionJson = ctx.getString(R.string.default_job_positions);
+        getRealm().executeTransactionAsync(realm -> {
+            realm.createOrUpdateAllFromJson(UnitModel.class, unitJson);
+            realm.createOrUpdateAllFromJson(JobPositionModel.class, jobPositionJson);
+        });
     }
 
     private static class Migration implements RealmMigration {

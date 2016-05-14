@@ -8,6 +8,11 @@
             android:icon="@drawable/ic_nav_book"
             android:title="@string/nav_units" />
 
+        <item
+            android:id="@+id/action_nav_job_posotions"
+            android:icon="@drawable/ic_nav_book"
+            android:title="@string/nav_job_positions" />
+
     </group>
 
 </menu>

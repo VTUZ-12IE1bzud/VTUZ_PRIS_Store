@@ -31,5 +31,12 @@ public class MainPresenter extends BasePresenter<MainViewHolder, MainView> {
                 view.onUnitsOpen();
             }
         }
+
+        @Override
+        public void onNavJobPositionClick() {
+            if (view != null) {
+                view.onJobPositionsOpen();
+            }
+        }
     };
 }

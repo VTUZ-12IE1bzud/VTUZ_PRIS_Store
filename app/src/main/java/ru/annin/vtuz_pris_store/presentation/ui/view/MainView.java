@@ -8,5 +8,6 @@ package ru.annin.vtuz_pris_store.presentation.ui.view;
 public interface MainView {
 
     void onUnitsOpen();
+    void onJobPositionsOpen();
 
 }
