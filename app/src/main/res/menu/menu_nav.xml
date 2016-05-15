@@ -4,19 +4,14 @@
     <group android:checkableBehavior="none">
 
         <item
-            android:id="@+id/action_nav_units"
-            android:icon="@drawable/ic_nav_book"
-            android:title="@string/nav_units" />
-
-        <item
-            android:id="@+id/action_nav_job_posotions"
+            android:id="@+id/action_nav_job_positions"
             android:icon="@drawable/ic_nav_book"
             android:title="@string/nav_job_positions" />
 
         <item
-            android:id="@+id/action_nav_type_organization_units"
+            android:id="@+id/action_nav_units"
             android:icon="@drawable/ic_nav_book"
-            android:title="@string/nav_type_organization_units" />
+            android:title="@string/nav_units" />
 
         <item
             android:id="@+id/action_nav_organization_units"
@@ -27,6 +22,11 @@
             android:id="@+id/action_nav_employees"
             android:icon="@drawable/ic_nav_book"
             android:title="@string/nav_employee" />
+
+        <item
+            android:id="@+id/action_nav_type_organization_units"
+            android:icon="@drawable/ic_nav_book"
+            android:title="@string/nav_type_organization_units" />
 
     </group>
 

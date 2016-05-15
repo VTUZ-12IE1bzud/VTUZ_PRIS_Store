@@ -57,7 +57,7 @@ public class MainViewHolder extends BaseViewHolder {
                 case R.id.action_nav_units:
                     listener.onNavUnitClick();
                     break;
-                case R.id.action_nav_job_posotions:
+                case R.id.action_nav_job_positions:
                     listener.onNavJobPositionClick();
                     break;
                 case R.id.action_nav_type_organization_units:

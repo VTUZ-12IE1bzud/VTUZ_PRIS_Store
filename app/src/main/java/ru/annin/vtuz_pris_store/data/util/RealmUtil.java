@@ -3,10 +3,6 @@ package ru.annin.vtuz_pris_store.data.util;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -57,76 +53,9 @@ public class RealmUtil {
             realm.createOrUpdateAllFromJson(UnitModel.class, unitJson);
             realm.createOrUpdateAllFromJson(JobPositionModel.class, jobPositionJson);
             realm.createOrUpdateAllFromJson(TypeOrganizationUnitModel.class, typeOrganizationUnitJson);
-            JSONArray organizationUnitJA = new JSONArray();
-            JSONArray employeeJA = new JSONArray();
-            try {
-                organizationUnitJA = new JSONArray(organizationUnitJson);
-                employeeJA = new JSONArray(employeeJson);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            createOrUpdateOrganizationUnitModel(realm, organizationUnitJA);
-            createOrUpdateEmployeeModel(realm, employeeJA);
+            realm.createOrUpdateAllFromJson(OrganizationUnitModel.class, organizationUnitJson);
+            realm.createOrUpdateAllFromJson(EmployeeModel.class, employeeJson);
         });
-    }
-
-    private static void createOrUpdateOrganizationUnitModel(@NonNull Realm realm, JSONArray array) {
-        for (int i = 0; i < array.length(); i++) {
-            final JSONObject jsonObject = array.optJSONObject(i);
-            if (jsonObject != null) {
-                final String id = jsonObject.optString(OrganizationUnitModel.FIELD_ID);
-                final String name = jsonObject.optString(OrganizationUnitModel.FIELD_NAME);
-                final String type = jsonObject.optString(OrganizationUnitModel.FIELD_TYPE);
-                final String chief = jsonObject.optString(OrganizationUnitModel.FIELD_CHIEF);
-                final String address = jsonObject.optString(OrganizationUnitModel.FIELD_ADDRESS);
-                final TypeOrganizationUnitModel typeModel = realm.where(TypeOrganizationUnitModel.class)
-                        .equalTo(TypeOrganizationUnitModel.FIELD_ID, type)
-                        .findFirst();
-                OrganizationUnitModel model = realm.where(OrganizationUnitModel.class)
-                        .equalTo(OrganizationUnitModel.FIELD_ID, id)
-                        .findFirst();
-                if (model == null) {
-                    model = realm.createObject(OrganizationUnitModel.class);
-                }
-                model.setId(id);
-                model.setName(name);
-                model.setType(typeModel);
-                model.setChief(chief);
-                model.setAddress(address);
-            }
-        }
-    }
-
-    private static void createOrUpdateEmployeeModel(@NonNull Realm realm, JSONArray array) {
-        for (int i = 0; i < array.length(); i++) {
-            final JSONObject jsonObject = array.optJSONObject(i);
-            if (jsonObject != null) {
-                final String id = jsonObject.optString(EmployeeModel.FIELD_ID);
-                final String surname = jsonObject.optString(EmployeeModel.FIELD_SURNAME);
-                final String name = jsonObject.optString(EmployeeModel.FIELD_NAME);
-                final String patronomic = jsonObject.optString(EmployeeModel.FIELD_PATRONYMIC);
-                final String jobPositionId = jsonObject.optString(EmployeeModel.FIELD_JOB_POSITION);
-                final String organizationUnitId = jsonObject.optString(EmployeeModel.FIELD_ORGANIZATION_UNIT);
-                final JobPositionModel jobPositionModel = realm.where(JobPositionModel.class)
-                        .equalTo(JobPositionModel.FIELD_ID, jobPositionId)
-                        .findFirst();
-                final OrganizationUnitModel organizationUnitModel = realm.where(OrganizationUnitModel.class)
-                        .equalTo(OrganizationUnitModel.FIELD_ID, organizationUnitId)
-                        .findFirst();
-                EmployeeModel model = realm.where(EmployeeModel.class)
-                        .equalTo(EmployeeModel.FIELD_ID, id)
-                        .findFirst();
-                if (model == null) {
-                    model = realm.createObject(EmployeeModel.class);
-                }
-                model.setId(id);
-                model.setSurname(surname);
-                model.setName(name);
-                model.setPatronymic(patronomic);
-                model.setJobPosition(jobPositionModel);
-                model.setOrganizationUnit(organizationUnitModel);
-            }
-        }
     }
 
     private static class Migration implements RealmMigration {
