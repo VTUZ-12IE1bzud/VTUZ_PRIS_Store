@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import ru.annin.vtuz_pris_store.presentation.ui.activity.EmployeeActivity;
 import ru.annin.vtuz_pris_store.presentation.ui.activity.JobPositionActivity;
 import ru.annin.vtuz_pris_store.presentation.ui.activity.MainActivity;
+import ru.annin.vtuz_pris_store.presentation.ui.activity.NomenclatureActivity;
 import ru.annin.vtuz_pris_store.presentation.ui.activity.OrganizationUnitActivity;
 import ru.annin.vtuz_pris_store.presentation.ui.activity.TypeOrganizationUnitActivity;
 import ru.annin.vtuz_pris_store.presentation.ui.activity.UnitActivity;
@@ -45,6 +46,11 @@ public class Navigator {
 
     public void navigate2Employees(@NonNull Context ctx) {
         Intent intent = new Intent(ctx, EmployeeActivity.class);
+        ctx.startActivity(intent);
+    }
+
+    public void navigate2Nomenclature(@NonNull Context ctx) {
+        Intent intent = new Intent(ctx, NomenclatureActivity.class);
         ctx.startActivity(intent);
     }
 }

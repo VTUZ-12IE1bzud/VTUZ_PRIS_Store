@@ -59,5 +59,12 @@ public class MainPresenter extends BasePresenter<MainViewHolder, MainView> {
                 view.onEmployeesOpen();
             }
         }
+
+        @Override
+        public void onNavNomenclatureClick() {
+            if (view != null) {
+                view.onNomenclatureOpen();
+            }
+        }
     };
 }

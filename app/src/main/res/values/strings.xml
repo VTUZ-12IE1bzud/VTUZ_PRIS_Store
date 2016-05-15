@@ -10,6 +10,7 @@
     <string name="activity_type_organization_units">Типы подразделений</string>
     <string name="activity_organization_units">Подразделения</string>
     <string name="activity_employee">Сотрудники</string>
+    <string name="activity_nomenclature">Номенклатура</string>
 
     <!-- Navigation's -->
     <string name="nav_drawer_open">Отркыть меню</string>
@@ -19,11 +20,15 @@
     <string name="nav_type_organization_units">@string/activity_type_organization_units</string>
     <string name="nav_organization_units">@string/activity_organization_units</string>
     <string name="nav_employee">@string/activity_employee</string>
+    <string name="nav_nomenclature">@string/activity_nomenclature</string>
 
     <!-- Units -->
     <string name="item_unit_list_format">%1$s (%2$s)</string>
 
     <!-- Employees -->
     <string name="item_employee_name_list_format">%1$s %2$s %3$s</string>
+
+    <!-- Employees -->
+    <string name="item_nomenclature_unit_list_format">Единица измерения: %1$s (%2$s)</string>
 
 </resources>

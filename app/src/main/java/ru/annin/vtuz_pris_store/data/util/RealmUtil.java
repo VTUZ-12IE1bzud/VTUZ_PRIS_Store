@@ -11,6 +11,7 @@ import io.realm.RealmSchema;
 import ru.annin.vtuz_pris_store.R;
 import ru.annin.vtuz_pris_store.domain.model.EmployeeModel;
 import ru.annin.vtuz_pris_store.domain.model.JobPositionModel;
+import ru.annin.vtuz_pris_store.domain.model.NomenclatureModel;
 import ru.annin.vtuz_pris_store.domain.model.OrganizationUnitModel;
 import ru.annin.vtuz_pris_store.domain.model.TypeOrganizationUnitModel;
 import ru.annin.vtuz_pris_store.domain.model.UnitModel;
@@ -49,12 +50,14 @@ public class RealmUtil {
         final String typeOrganizationUnitJson = ctx.getString(R.string.default_type_organization_unit);
         final String organizationUnitJson = ctx.getString(R.string.default_organization_unit);
         final String employeeJson = ctx.getString(R.string.default_employees);
+        final String nomenclatureJson = ctx.getString(R.string.default_nomenclature);
         getRealm().executeTransactionAsync(realm -> {
             realm.createOrUpdateAllFromJson(UnitModel.class, unitJson);
             realm.createOrUpdateAllFromJson(JobPositionModel.class, jobPositionJson);
             realm.createOrUpdateAllFromJson(TypeOrganizationUnitModel.class, typeOrganizationUnitJson);
             realm.createOrUpdateAllFromJson(OrganizationUnitModel.class, organizationUnitJson);
             realm.createOrUpdateAllFromJson(EmployeeModel.class, employeeJson);
+            realm.createOrUpdateAllFromJson(NomenclatureModel.class, nomenclatureJson);
         });
     }
 

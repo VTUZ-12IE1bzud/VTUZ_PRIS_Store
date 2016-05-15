@@ -50,4 +50,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     public void onEmployeesOpen() {
         navigator.navigate2Employees(this);
     }
+
+    @Override
+    public void onNomenclatureOpen() {
+        navigator.navigate2Nomenclature(this);
+    }
 }

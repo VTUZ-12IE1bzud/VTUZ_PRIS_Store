@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="none">
-
-        <item
-            android:id="@+id/action_nav_job_positions"
-            android:icon="@drawable/ic_nav_book"
-            android:title="@string/nav_job_positions" />
+    <group
+        android:id="@+id/group_nav_nomenclature"
+        android:checkableBehavior="none">
 
         <item
             android:id="@+id/action_nav_units"
@@ -14,19 +11,41 @@
             android:title="@string/nav_units" />
 
         <item
-            android:id="@+id/action_nav_organization_units"
-            android:icon="@drawable/ic_nav_book"
-            android:title="@string/nav_organization_units" />
+            android:id="@+id/action_nav_nomenclature"
+            android:icon="@drawable/ic_card_detail"
+            android:title="@string/nav_nomenclature" />
 
-        <item
-            android:id="@+id/action_nav_employees"
-            android:icon="@drawable/ic_nav_book"
-            android:title="@string/nav_employee" />
+    </group>
+
+    <group
+        android:id="@+id/group_nav_organization"
+        android:checkableBehavior="none">
 
         <item
             android:id="@+id/action_nav_type_organization_units"
             android:icon="@drawable/ic_nav_book"
             android:title="@string/nav_type_organization_units" />
+
+        <item
+            android:id="@+id/action_nav_organization_units"
+            android:icon="@drawable/ic_house"
+            android:title="@string/nav_organization_units" />
+
+    </group>
+
+    <group
+        android:id="@+id/group_nav_employee"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/action_nav_job_positions"
+            android:icon="@drawable/ic_nav_book"
+            android:title="@string/nav_job_positions" />
+
+        <item
+            android:id="@+id/action_nav_employees"
+            android:icon="@drawable/ic_account_card"
+            android:title="@string/nav_employee" />
 
     </group>
 
