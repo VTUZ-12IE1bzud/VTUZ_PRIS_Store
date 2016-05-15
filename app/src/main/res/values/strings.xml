@@ -27,8 +27,9 @@
 
     <!-- Employees -->
     <string name="item_employee_name_list_format">%1$s %2$s %3$s</string>
+    <string name="item_employee_name_small_list_format">%1$s %2$s. %3$s.</string>
 
-    <!-- Employees -->
+    <!-- Nomenclature -->
     <string name="item_nomenclature_unit_list_format">Единица измерения: %1$s (%2$s)</string>
 
 </resources>

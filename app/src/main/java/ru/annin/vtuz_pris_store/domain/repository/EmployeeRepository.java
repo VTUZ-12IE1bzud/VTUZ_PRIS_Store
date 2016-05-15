@@ -20,4 +20,12 @@ public interface EmployeeRepository {
     @NonNull
     Observable<RealmResults<EmployeeModel>> listEmployees();
 
+    /**
+     * Возвращает коллекцию "Сотрудников" по складу. Отсортированы по фамилии.
+     * @param id Идентификатор склада.
+     * @return Коллекция "Сотрудников".
+     */
+    @NonNull
+    Observable<RealmResults<EmployeeModel>> listEmployeesByStore(String id);
+
 }

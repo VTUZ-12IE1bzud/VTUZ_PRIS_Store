@@ -34,6 +34,7 @@ public class RealmUtil {
         final RealmConfiguration configuration = new RealmConfiguration.Builder(ctx)
                 .name(DB_NAME)
                 .schemaVersion(CURRENT_VERSION)
+                .deleteRealmIfMigrationNeeded()
                 .migration(new Migration())
                 .build();
         Realm.setDefaultConfiguration(configuration);

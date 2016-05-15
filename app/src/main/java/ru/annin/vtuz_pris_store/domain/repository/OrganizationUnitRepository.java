@@ -19,4 +19,11 @@ public interface OrganizationUnitRepository {
      */
     @NonNull
     Observable<RealmResults<OrganizationUnitModel>> listOrganizationUnit();
+
+    /**
+     * Возвращает коллекцию "Складов". Отсортированы по названию.
+     * @return Коллекцию "Складов".
+     */
+    @NonNull
+    Observable<RealmResults<OrganizationUnitModel>> listStore();
 }
