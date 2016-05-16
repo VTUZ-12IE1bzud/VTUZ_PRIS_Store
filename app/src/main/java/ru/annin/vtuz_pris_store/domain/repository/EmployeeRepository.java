@@ -28,4 +28,7 @@ public interface EmployeeRepository {
     @NonNull
     Observable<RealmResults<EmployeeModel>> listEmployeesByStore(String id);
 
+    @NonNull
+    Observable<EmployeeModel> getEmployeeById(String id);
+
 }

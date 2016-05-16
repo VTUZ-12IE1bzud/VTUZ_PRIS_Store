@@ -20,4 +20,7 @@ public interface ReceiverProductRepository {
     @NonNull
     Observable<RealmResults<ReceiverProductModel>> listReceiverProducts();
 
+    @NonNull
+    Observable<ReceiverProductModel> getReceiverProductById(@NonNull String id);
+
 }

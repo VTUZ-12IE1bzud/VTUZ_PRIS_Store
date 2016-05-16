@@ -3,6 +3,7 @@
     <!-- Global -->
     <string name="app_name">Склад (ПрИС)</string>
     <string name="msg_list_empty">Список пуст</string>
+    <string name="action_save">Сохранить</string>
 
     <!-- Activity's -->
     <string name="activity_units">Единицы измерения</string>
@@ -33,5 +34,11 @@
 
     <!-- Nomenclature -->
     <string name="item_nomenclature_unit_list_format">Единица измерения: %1$s (%2$s)</string>
+
+    <!-- Detail Receiver Product -->
+    <string name="hint_name_invoice_input">Наименование накладной</string>
+    <string name="hint_movement_to">Получатель</string>
+    <string name="hint_name_employee_input">Приемщик</string>
+    <string name="hint_date">Дата</string>
 
 </resources>

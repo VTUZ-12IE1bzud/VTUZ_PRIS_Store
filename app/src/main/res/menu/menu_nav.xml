@@ -2,6 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
+        android:id="@+id/group_nav_invoice"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/action_nav_receiver_product"
+            android:icon="@drawable/ic_movement_to"
+            android:title="@string/nav_receiver_product" />
+
+    </group>
+
+    <group
         android:id="@+id/group_nav_nomenclature"
         android:checkableBehavior="none">
 

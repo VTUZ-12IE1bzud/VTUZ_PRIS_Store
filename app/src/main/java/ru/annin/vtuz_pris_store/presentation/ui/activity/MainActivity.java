@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import ru.annin.vtuz_pris_store.R;
 import ru.annin.vtuz_pris_store.data.repository.EmployeeRepositoryImpl;
 import ru.annin.vtuz_pris_store.data.repository.OrganizationUnitRepositoryImpl;
+import ru.annin.vtuz_pris_store.data.repository.SettingRepositoryImpl;
 import ru.annin.vtuz_pris_store.presentation.common.BaseActivity;
 import ru.annin.vtuz_pris_store.presentation.presenter.MainPresenter;
 import ru.annin.vtuz_pris_store.presentation.ui.view.MainView;
@@ -23,7 +24,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MainViewHolder viewHolder = new MainViewHolder(this, findViewById(R.id.drawer));
-        presenter = new MainPresenter(new OrganizationUnitRepositoryImpl(), new EmployeeRepositoryImpl());
+        presenter = new MainPresenter(new OrganizationUnitRepositoryImpl(),
+                new EmployeeRepositoryImpl(), new SettingRepositoryImpl(this));
         presenter.setViewHolder(viewHolder);
         presenter.setView(this);
         presenter.onInitialization();
@@ -57,5 +59,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public void onNomenclatureOpen() {
         navigator.navigate2Nomenclature(this);
+    }
+
+    @Override
+    public void onReceiverProductOpen() {
+        navigator.navigate2ReceiverProduct(this);
     }
 }

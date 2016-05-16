@@ -36,4 +36,13 @@ public class OrganizationUnitRepositoryImpl implements OrganizationUnitRepositor
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }
+
+    @NonNull
+    @Override
+    public Observable<OrganizationUnitModel> getOrganizationUnitById(String id) {
+        return RealmUtil.getRealm().where(OrganizationUnitModel.class)
+                .equalTo(OrganizationUnitModel.FIELD_ID, id)
+                .findFirstAsync()
+                .asObservable();
+    }
 }

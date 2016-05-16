@@ -13,5 +13,6 @@ public interface MainView {
     void onOrganizationUnitsOpen();
     void onEmployeesOpen();
     void onNomenclatureOpen();
+    void onReceiverProductOpen();
 
 }

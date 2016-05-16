@@ -64,11 +64,26 @@ public class MainViewHolder extends BaseViewHolder {
         RxNavigationView.itemSelections(vNavigation).subscribe(this::onNavItemClick);
         spEmployee.setAdapter(employeeAdapter);
         spStore.setOnItemSelectedListener(onStoreListener);
+        spEmployee.setOnItemSelectedListener(onEmployeeListener);
         spStore.setAdapter(storeAdapter);
+    }
+
+    public MainViewHolder showStore(RealmResults<OrganizationUnitModel> data, String selectId) {
+        showStore(data);
+        int selectPosition = storeAdapter.getPosition(selectId);
+        spStore.setSelection(selectPosition);
+        return this;
     }
 
     public MainViewHolder showStore(RealmResults<OrganizationUnitModel> data) {
         storeAdapter.updateData(data);
+        return this;
+    }
+
+    public MainViewHolder showEmployee(RealmResults<EmployeeModel> data, String selectId) {
+        showEmployee(data);
+        int selectPosition = employeeAdapter.getPosition(selectId);
+        spEmployee.setSelection(selectPosition);
         return this;
     }
 
@@ -103,6 +118,9 @@ public class MainViewHolder extends BaseViewHolder {
                 case R.id.action_nav_nomenclature:
                     listener.onNavNomenclatureClick();
                     break;
+                case R.id.action_nav_receiver_product:
+                    listener.onNavReceiverProductClick();
+                    break;
                 default: break;
             }
         }
@@ -123,6 +141,21 @@ public class MainViewHolder extends BaseViewHolder {
         }
     };
 
+    private final AdapterView.OnItemSelectedListener onEmployeeListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String employeeId = employeeAdapter.getId(position);
+            if (listener != null) {
+                listener.onEmployeeSelect(employeeId);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
     public interface OnInteractionListener {
         void onNavUnitClick();
         void onNavJobPositionClick();
@@ -130,6 +163,8 @@ public class MainViewHolder extends BaseViewHolder {
         void onNavOrganizationUnitClick();
         void onNavEmployeeClick();
         void onNavNomenclatureClick();
+        void onNavReceiverProductClick();
         void onStoreSelect(@Nullable String id);
+        void onEmployeeSelect(@Nullable String id);
     }
 }

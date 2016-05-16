@@ -23,4 +23,13 @@ public class ReceiverProductRepositoryImpl implements ReceiverProductRepository 
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }
+
+    @NonNull
+    @Override
+    public Observable<ReceiverProductModel> getReceiverProductById(@NonNull String id) {
+        return RealmUtil.getRealm().where(ReceiverProductModel.class)
+                .equalTo(ReceiverProductModel.FIELD_ID, id)
+                .findFirstAsync()
+                .asObservable();
+    }
 }

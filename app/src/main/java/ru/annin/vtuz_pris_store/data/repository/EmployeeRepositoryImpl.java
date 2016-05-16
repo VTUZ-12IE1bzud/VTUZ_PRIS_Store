@@ -35,4 +35,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }
+
+    @NonNull
+    @Override
+    public Observable<EmployeeModel> getEmployeeById(String id) {
+        return RealmUtil.getRealm().where(EmployeeModel.class)
+                .equalTo(EmployeeModel.FIELD_ID, id)
+                .findFirstAsync()
+                .asObservable();
+    }
 }

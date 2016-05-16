@@ -26,4 +26,7 @@ public interface OrganizationUnitRepository {
      */
     @NonNull
     Observable<RealmResults<OrganizationUnitModel>> listStore();
+
+    @NonNull
+    Observable<OrganizationUnitModel> getOrganizationUnitById(String id);
 }

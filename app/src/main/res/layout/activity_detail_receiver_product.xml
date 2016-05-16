@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     tools:context=".presentation.ui.activity.ReceiverProductActivity">
 
-    <include layout="@layout/content_receiver_product" />
+    <include layout="@layout/content_detail_receiver_product" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

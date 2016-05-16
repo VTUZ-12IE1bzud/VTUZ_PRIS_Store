@@ -7,4 +7,6 @@ package ru.annin.vtuz_pris_store.presentation.ui.view;
  */
 public interface ReceiverProductView {
     void onFinish();
+    void onReceiverProductCreate();
+    void onReceiverProductOpen(String id);
 }

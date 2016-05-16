@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import ru.annin.vtuz_pris_store.domain.repository.EmployeeRepository;
 import ru.annin.vtuz_pris_store.domain.repository.OrganizationUnitRepository;
+import ru.annin.vtuz_pris_store.domain.repository.SettingsRepository;
 import ru.annin.vtuz_pris_store.presentation.common.BasePresenter;
 import ru.annin.vtuz_pris_store.presentation.ui.view.MainView;
 import ru.annin.vtuz_pris_store.presentation.ui.viewholder.MainViewHolder;
@@ -26,18 +27,22 @@ public class MainPresenter extends BasePresenter<MainViewHolder, MainView> {
     // Repository's
     private final OrganizationUnitRepository organizationUnitRepository;
     private final EmployeeRepository employeeRepository;
+    private final SettingsRepository settingsRepository;
 
     public MainPresenter(@NonNull OrganizationUnitRepository organizationUnitRepository,
-                         @NonNull EmployeeRepository employeeRepository) {
+                         @NonNull EmployeeRepository employeeRepository,
+                         @NonNull SettingsRepository settingsRepository) {
         subscription = new CompositeSubscription();
         this.organizationUnitRepository = organizationUnitRepository;
         this.employeeRepository = employeeRepository;
+        this.settingsRepository = settingsRepository;
     }
 
     public void onInitialization() {
         Subscription sub = organizationUnitRepository.listStore()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(models -> {if (viewHolder != null) viewHolder.showStore(models);});
+                .subscribe(models -> {if (viewHolder != null) viewHolder.showStore(models,
+                        settingsRepository.loadSelectStoreId());});
         subscription.add(sub);
     }
 
@@ -100,11 +105,24 @@ public class MainPresenter extends BasePresenter<MainViewHolder, MainView> {
         }
 
         @Override
+        public void onNavReceiverProductClick() {
+            if (view != null) {
+                view.onReceiverProductOpen();
+            }
+        }
+
+        @Override
         public void onStoreSelect(@Nullable String id) {
+            settingsRepository.saveStoreId(id);
             Subscription sub = employeeRepository.listEmployeesByStore(id)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(viewHolder::showEmployee);
+                    .subscribe(model -> viewHolder.showEmployee(model, settingsRepository.loadSelectEmployeeId()));
             subscription.add(sub);
+        }
+
+        @Override
+        public void onEmployeeSelect(@Nullable String id) {
+            settingsRepository.saveEmployeeId(id);
         }
     };
 }
