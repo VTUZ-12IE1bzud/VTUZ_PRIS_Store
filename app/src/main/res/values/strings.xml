@@ -11,6 +11,7 @@
     <string name="activity_organization_units">Подразделения</string>
     <string name="activity_employee">Сотрудники</string>
     <string name="activity_nomenclature">Номенклатура</string>
+    <string name="activity_receiver_product">Приход товара</string>
 
     <!-- Navigation's -->
     <string name="nav_drawer_open">Отркыть меню</string>
@@ -21,6 +22,7 @@
     <string name="nav_organization_units">@string/activity_organization_units</string>
     <string name="nav_employee">@string/activity_employee</string>
     <string name="nav_nomenclature">@string/activity_nomenclature</string>
+    <string name="nav_receiver_product">@string/activity_receiver_product</string>
 
     <!-- Units -->
     <string name="item_unit_list_format">%1$s (%2$s)</string>

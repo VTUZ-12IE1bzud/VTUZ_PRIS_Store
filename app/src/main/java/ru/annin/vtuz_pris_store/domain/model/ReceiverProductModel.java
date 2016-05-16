@@ -13,7 +13,7 @@ import io.realm.annotations.RealmClass;
  * @author Pavel Annin, 2016.
  */
 @RealmClass
-public class ReceivingProductModel extends RealmObject {
+public class ReceiverProductModel extends RealmObject {
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_INVOICE = "invoice";
@@ -30,7 +30,7 @@ public class ReceivingProductModel extends RealmObject {
     private EmployeeModel employee;
     private RealmList<ProductModel> products;
 
-    public ReceivingProductModel() {
+    public ReceiverProductModel() {
         // Empty
     }
 
