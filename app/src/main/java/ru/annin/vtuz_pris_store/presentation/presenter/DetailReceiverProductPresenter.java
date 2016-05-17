@@ -36,7 +36,9 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
     private final SettingsRepository settingsRepository;
 
     // Data's
+    private boolean isCreate;
     private Date date;
+    private String receiverProductId;
     private String organizationUnitId;
     private String employeeId;
 
@@ -50,9 +52,11 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
         this.employeeRepository = employeeRepository;
         this.settingsRepository = settingsRepository;
         date = new Date();
+        isCreate = true;
     }
 
     public void onInitialization() {
+        isCreate = true;
         if (viewHolder != null) {
             viewHolder.enableAnimation(false)
                     .showDate(date);
@@ -79,14 +83,17 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
         subscription.add(subEmployee);
     }
 
-    public void onInitialization(@NonNull String receiverProductId) {
-        Subscription sub = receiverProductRepository.getReceiverProductById(receiverProductId)
+    public void onInitialization(@NonNull String id) {
+        isCreate = false;
+        Subscription sub = receiverProductRepository.getReceiverProductById(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(model -> {
                     if (viewHolder != null && model != null && model.isLoaded() && model.isValid()) {
                         date = model.getDate();
+                        receiverProductId = model.getId();
                         viewHolder.showNameInvoice(model.getInvoice())
-                                .showDate(date);
+                                .showDate(date)
+                                .showProducts(model.getProducts().where().findAll());
                         final OrganizationUnitModel organizationUnit = model.getStory();
                         if (organizationUnit != null && organizationUnit.isValid()) {
                             organizationUnitId = organizationUnit.getId();

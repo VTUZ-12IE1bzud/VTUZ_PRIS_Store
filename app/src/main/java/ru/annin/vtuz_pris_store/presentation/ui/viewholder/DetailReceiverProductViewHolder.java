@@ -17,8 +17,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.realm.RealmResults;
 import ru.annin.vtuz_pris_store.R;
+import ru.annin.vtuz_pris_store.domain.model.ProductModel;
 import ru.annin.vtuz_pris_store.presentation.common.BaseViewHolder;
+import ru.annin.vtuz_pris_store.presentation.ui.adapter.ProductListAdapter;
 
 /**
  * <p>ViewHolder экрана "Приходная накладная".</p>
@@ -40,6 +43,9 @@ public class DetailReceiverProductViewHolder extends BaseViewHolder {
     private final EditText edtNameInvoice;
     private final RecyclerView rcList;
     private final View vEmpty;
+
+    // Adapter's
+    private final ProductListAdapter adapter;
     
     // Listener's
     private OnInteractionListener listener;
@@ -60,7 +66,10 @@ public class DetailReceiverProductViewHolder extends BaseViewHolder {
         vEmpty = vRoot.findViewById(android.R.id.empty);
 
         // Setup
+        adapter = new ProductListAdapter();
+        adapter.setViewEmpty(vEmpty);
         vToolbar.inflateMenu(R.menu.menu_invoice);
+        rcList.setAdapter(adapter);
         RxToolbar.navigationClicks(vToolbar).subscribe(aVoid -> {if (listener != null) listener.onBackClick();});
         RxToolbar.itemClicks(vToolbar).subscribe(menuItem -> {
             if (listener != null) {
@@ -122,6 +131,11 @@ public class DetailReceiverProductViewHolder extends BaseViewHolder {
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         dialog.show();
+        return this;
+    }
+
+    public DetailReceiverProductViewHolder showProducts(RealmResults<ProductModel> models) {
+        adapter.updateRealmResults(models);
         return this;
     }
 
