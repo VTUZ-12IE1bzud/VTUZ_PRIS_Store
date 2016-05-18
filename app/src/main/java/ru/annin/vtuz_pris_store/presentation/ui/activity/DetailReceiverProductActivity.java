@@ -12,6 +12,7 @@ import ru.annin.vtuz_pris_store.data.repository.ReceiverProductRepositoryImpl;
 import ru.annin.vtuz_pris_store.data.repository.SettingRepositoryImpl;
 import ru.annin.vtuz_pris_store.presentation.common.BaseActivity;
 import ru.annin.vtuz_pris_store.presentation.presenter.DetailReceiverProductPresenter;
+import ru.annin.vtuz_pris_store.presentation.ui.alert.DetailProductAlert;
 import ru.annin.vtuz_pris_store.presentation.ui.view.DetailReceiverProductView;
 import ru.annin.vtuz_pris_store.presentation.ui.viewholder.DetailReceiverProductViewHolder;
 
@@ -55,5 +56,11 @@ public class DetailReceiverProductActivity extends BaseActivity<DetailReceiverPr
     @Override
     public void onFinish() {
         finish();
+    }
+
+    @Override
+    public void onProductCreateOpen(DetailProductAlert.OnInteractionListener listener) {
+       DetailProductAlert.newInstance(listener)
+                .show(getFragmentManager(), DetailProductAlert.TAG);
     }
 }

@@ -9,9 +9,11 @@ import ru.annin.vtuz_pris_store.domain.model.EmployeeModel;
 import ru.annin.vtuz_pris_store.domain.model.OrganizationUnitModel;
 import ru.annin.vtuz_pris_store.domain.repository.EmployeeRepository;
 import ru.annin.vtuz_pris_store.domain.repository.OrganizationUnitRepository;
+import ru.annin.vtuz_pris_store.domain.repository.ProductRepository;
 import ru.annin.vtuz_pris_store.domain.repository.ReceiverProductRepository;
 import ru.annin.vtuz_pris_store.domain.repository.SettingsRepository;
 import ru.annin.vtuz_pris_store.presentation.common.BasePresenter;
+import ru.annin.vtuz_pris_store.presentation.ui.alert.DetailProductAlert;
 import ru.annin.vtuz_pris_store.presentation.ui.view.DetailReceiverProductView;
 import ru.annin.vtuz_pris_store.presentation.ui.viewholder.DetailReceiverProductViewHolder;
 import rx.Subscription;
@@ -25,7 +27,10 @@ import static ru.annin.vtuz_pris_store.presentation.ui.viewholder.DetailReceiver
  *
  * @author Pavel Annin, 2016.
  */
-public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiverProductViewHolder, DetailReceiverProductView> {
+public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiverProductViewHolder,
+        DetailReceiverProductView> {
+
+    private static final String TEMP_RECEIVER_PRODUCT_ID = "temp_receiver_product_id";
 
     private final CompositeSubscription subscription;
 
@@ -34,6 +39,7 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
     private final OrganizationUnitRepository organizationUnitRepository;
     private final EmployeeRepository employeeRepository;
     private final SettingsRepository settingsRepository;
+    private final ProductRepository productRepository;
 
     // Data's
     private boolean isCreate;
@@ -70,6 +76,8 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
                         viewHolder.showMovementTo(model.getName());
                     }
                 });
+        subscription.add(subOrganizationUnit);
+
         Subscription subEmployee = employeeRepository
                 .getEmployeeById(settingsRepository.loadSelectEmployeeId())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,8 +87,17 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
                         viewHolder.showNameEmployee(model.getSurname(), model.getName(), model.getPatronymic());
                     }
                 });
-        subscription.add(subOrganizationUnit);
         subscription.add(subEmployee);
+
+        Subscription subReceiverTemp = receiverProductRepository.getReceiverProductById(TEMP_RECEIVER_PRODUCT_ID)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(model -> {
+                    if (viewHolder != null && model != null && model.isLoaded() && model.isValid()) {
+                        viewHolder.showNameInvoice(model.getInvoice())
+                                .showProducts(model.getProducts().where().findAll());
+                    }
+                });
+        subscription.add(subReceiverTemp);
     }
 
     public void onInitialization(@NonNull String id) {
@@ -139,7 +156,9 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
 
         @Override
         public void onAddClick() {
-
+            if (view != null) {
+                view.onProductCreateOpen(onDetailProductAlertListener);
+            }
         }
 
         @Override
@@ -151,6 +170,18 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
         public void onDateSelect(Date d) {
             date = d;
             viewHolder.showDate(date);
+        }
+    };
+
+    private final DetailProductAlert.OnInteractionListener onDetailProductAlertListener = new DetailProductAlert.OnInteractionListener() {
+        @Override
+        public void onSaveProduct(String productId, String nomenclatureId, float amount) {
+
+        }
+
+        @Override
+        public void onCreateProduct(String nomenclatureId, float amount) {
+            productRepository.
         }
     };
 }
