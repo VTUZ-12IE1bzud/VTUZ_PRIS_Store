@@ -106,6 +106,7 @@ public class DetailProductAlert extends DialogFragment {
         // Setup
         adapter = new NomenclatureSelectAdapter(getActivity());
         spNomenclature.setAdapter(adapter);
+        tilAmount.setHintAnimationEnabled(false);
 
         Subscription subNomenclature = nomenclatureRepository.listNomenclature()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -143,7 +144,19 @@ public class DetailProductAlert extends DialogFragment {
         super.onStart();
         ((AlertDialog) getDialog()).getButton(DialogInterface.BUTTON_POSITIVE)
                 .setOnClickListener(v -> {
-                    getDialog().dismiss();
+                    String nomenclatureId = adapter.getId(spNomenclature.getSelectedItemPosition());
+                    String amount = edyAmount.getText().toString();
+                    if (isValidation(nomenclatureId, amount)) {
+                        if (listener != null) {
+                            float fAmount = Float.valueOf(amount);
+                            if (isCreate) {
+                                listener.onCreateProduct(nomenclatureId, fAmount);
+                            } else {
+                                listener.onSaveProduct(productId, nomenclatureId, fAmount);
+                            }
+                        }
+                        getDialog().dismiss();
+                    }
                 });
         ((AlertDialog) getDialog()).getButton(DialogInterface.BUTTON_NEGATIVE)
                 .setOnClickListener(v -> getDialog().dismiss());
@@ -153,6 +166,18 @@ public class DetailProductAlert extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
         subscription.unsubscribe();
+    }
+
+    private boolean isValidation(String nomenclatureId, String amount) {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(nomenclatureId)) {
+            valid = false;
+        }
+        if (TextUtils.isEmpty(amount)) {
+            valid = false;
+        }
+        return valid;
     }
 
     public interface OnInteractionListener {

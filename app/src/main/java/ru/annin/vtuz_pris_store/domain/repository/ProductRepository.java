@@ -1,6 +1,7 @@
 package ru.annin.vtuz_pris_store.domain.repository;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import ru.annin.vtuz_pris_store.domain.model.ProductModel;
 import rx.Observable;
@@ -15,6 +16,11 @@ public interface ProductRepository {
     @NonNull
     Observable<ProductModel> getProductById(String id);
 
-    void asyncCreateProduct(String nomenclatureId, float amount);
+    @Nullable
+    ProductModel createProduct(String nomenclatureId, float amount);
+
+    void asyncEditProduct(String productId, String nomenclatureId, float amount);
+
+    void asyncRemoveProduct(String productId);
 
 }

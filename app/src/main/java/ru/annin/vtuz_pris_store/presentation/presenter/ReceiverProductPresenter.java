@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import ru.annin.vtuz_pris_store.domain.model.ReceiverProductModel;
 import ru.annin.vtuz_pris_store.domain.repository.ReceiverProductRepository;
+import ru.annin.vtuz_pris_store.domain.repository.SettingsRepository;
 import ru.annin.vtuz_pris_store.presentation.common.BasePresenter;
 import ru.annin.vtuz_pris_store.presentation.ui.view.ReceiverProductView;
 import ru.annin.vtuz_pris_store.presentation.ui.viewholder.ReceiverProductViewHolder;
@@ -25,14 +26,18 @@ public class ReceiverProductPresenter extends BasePresenter<ReceiverProductViewH
 
     // Repository's
     private final ReceiverProductRepository receiverProductRepository;
+    private final SettingsRepository settingsRepository;
 
-    public ReceiverProductPresenter(@NonNull ReceiverProductRepository receiverProductRepository) {
+    public ReceiverProductPresenter(@NonNull ReceiverProductRepository receiverProductRepository,
+                                    @NonNull SettingsRepository settingsRepository) {
         subscription = new CompositeSubscription();
         this.receiverProductRepository = receiverProductRepository;
+        this.settingsRepository = settingsRepository;
     }
 
     public void onInitialization() {
-        Subscription sub = receiverProductRepository.listReceiverProducts()
+        Subscription sub = receiverProductRepository
+                .listReceiverProductsByStore(settingsRepository.loadSelectStoreId())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(models -> {if (viewHolder != null) viewHolder.showReceiveProducts(models);});
         subscription.add(sub);
@@ -73,6 +78,11 @@ public class ReceiverProductPresenter extends BasePresenter<ReceiverProductViewH
             if (view != null) {
                 view.onReceiverProductOpen(model.getId());
             }
+        }
+
+        @Override
+        public void onRemoveReceiverClick(String receiverId) {
+            receiverProductRepository.asyncRemoveReceiver(receiverId);
         }
     };
 }

@@ -69,7 +69,7 @@ public class ProductListAdapter extends RealmRecyclerAdapter<ProductModel, Produ
 
         public ItemViewHolder showAmountProduct(float amount, String symbolUnit) {
             String format = txtAmountProduct.getResources()
-                    .getString(R.string.item_amount_product_list_format, amount, symbolUnit);
+                    .getString(R.string.item_amount_product_list_format, Float.toString(amount), symbolUnit);
             txtAmountProduct.setText(format);
             return this;
         }

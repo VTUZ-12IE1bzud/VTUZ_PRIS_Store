@@ -48,6 +48,14 @@ public abstract class RealmRecyclerAdapter <TRealm extends RealmObject,
         return (realmResults != null ? realmResults.size() : 0) == 0;
     }
 
+    @Nullable
+    public TRealm getItem(int position) {
+        if (realmResults != null && position >= 0 && position < realmResults.size()) {
+            return realmResults.get(position);
+        }
+        return null;
+    }
+
     protected void notifyEmptyChanged() {
         if (vEmpty != null) {
             if (realmResults != null && realmResults.size() >= 1) {

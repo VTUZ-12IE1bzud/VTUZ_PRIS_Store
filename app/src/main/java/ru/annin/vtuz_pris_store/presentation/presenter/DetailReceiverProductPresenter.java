@@ -2,11 +2,14 @@ package ru.annin.vtuz_pris_store.presentation.presenter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.util.Date;
 
+import ru.annin.vtuz_pris_store.R;
 import ru.annin.vtuz_pris_store.domain.model.EmployeeModel;
 import ru.annin.vtuz_pris_store.domain.model.OrganizationUnitModel;
+import ru.annin.vtuz_pris_store.domain.model.ProductModel;
 import ru.annin.vtuz_pris_store.domain.repository.EmployeeRepository;
 import ru.annin.vtuz_pris_store.domain.repository.OrganizationUnitRepository;
 import ru.annin.vtuz_pris_store.domain.repository.ProductRepository;
@@ -30,8 +33,6 @@ import static ru.annin.vtuz_pris_store.presentation.ui.viewholder.DetailReceiver
 public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiverProductViewHolder,
         DetailReceiverProductView> {
 
-    private static final String TEMP_RECEIVER_PRODUCT_ID = "temp_receiver_product_id";
-
     private final CompositeSubscription subscription;
 
     // Repository's
@@ -51,11 +52,13 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
     public DetailReceiverProductPresenter(@NonNull ReceiverProductRepository receiverProductRepository,
                                           @NonNull OrganizationUnitRepository organizationUnitRepository,
                                           @NonNull EmployeeRepository employeeRepository,
+                                          @NonNull ProductRepository productRepository,
                                           @NonNull SettingsRepository settingsRepository) {
         subscription = new CompositeSubscription();
         this.receiverProductRepository = receiverProductRepository;
         this.organizationUnitRepository = organizationUnitRepository;
         this.employeeRepository = employeeRepository;
+        this.productRepository = productRepository;
         this.settingsRepository = settingsRepository;
         date = new Date();
         isCreate = true;
@@ -89,7 +92,8 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
                 });
         subscription.add(subEmployee);
 
-        Subscription subReceiverTemp = receiverProductRepository.getReceiverProductById(TEMP_RECEIVER_PRODUCT_ID)
+        Subscription subReceiverTemp = receiverProductRepository
+                .getReceiverProductById(ReceiverProductRepository.TEMP_RECEIVER_PRODUCT_ID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(model -> {
                     if (viewHolder != null && model != null && model.isLoaded() && model.isValid()) {
@@ -108,7 +112,8 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
                     if (viewHolder != null && model != null && model.isLoaded() && model.isValid()) {
                         date = model.getDate();
                         receiverProductId = model.getId();
-                        viewHolder.showNameInvoice(model.getInvoice())
+                        viewHolder.enableAnimation(false)
+                                .showNameInvoice(model.getInvoice())
                                 .showDate(date)
                                 .showProducts(model.getProducts().where().findAll());
                         final OrganizationUnitModel organizationUnit = model.getStory();
@@ -141,6 +146,22 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
         return this;
     }
 
+    private boolean isValidation(String invoice) {
+        boolean valid = true;
+
+        if (viewHolder != null) {
+            viewHolder.errorNameInvoice(null);
+        }
+
+        if (TextUtils.isEmpty(invoice)) {
+            valid = false;
+            if (viewHolder != null && view != null) {
+                viewHolder.errorNameInvoice(view.getString(R.string.error_field_empty));
+            }
+        }
+        return valid;
+    }
+
     private final OnInteractionListener onViewHolderListener = new OnInteractionListener() {
         @Override
         public void onBackClick() {
@@ -150,8 +171,16 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
         }
 
         @Override
-        public void onSaveClick() {
-
+        public void onSaveClick(String invoice) {
+            if (isValidation(invoice)) {
+                if (isCreate) {
+                    receiverProductRepository
+                            .asyncCreateReceiverFromTemp(invoice, organizationUnitId, employeeId, date);
+                } else {
+                    receiverProductRepository.asyncEditReceiver(receiverProductId, invoice, date);
+                }
+                onBackClick();
+            }
         }
 
         @Override
@@ -159,6 +188,18 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
             if (view != null) {
                 view.onProductCreateOpen(onDetailProductAlertListener);
             }
+        }
+
+        @Override
+        public void onEditProduct(String productId) {
+            if (view != null) {
+                view.onProductOpen(productId, onDetailProductAlertListener);
+            }
+        }
+
+        @Override
+        public void onRemoveProduct(String productId) {
+            productRepository.asyncRemoveProduct(productId);
         }
 
         @Override
@@ -176,12 +217,17 @@ public class DetailReceiverProductPresenter extends BasePresenter<DetailReceiver
     private final DetailProductAlert.OnInteractionListener onDetailProductAlertListener = new DetailProductAlert.OnInteractionListener() {
         @Override
         public void onSaveProduct(String productId, String nomenclatureId, float amount) {
-
+            productRepository.asyncEditProduct(productId, nomenclatureId, amount);
         }
 
         @Override
         public void onCreateProduct(String nomenclatureId, float amount) {
-            productRepository.
+            ProductModel product = productRepository.createProduct(nomenclatureId, amount);
+            if (product != null && product.isValid()) {
+                receiverProductRepository.asyncAddProduct(isCreate
+                        ? ReceiverProductRepository.TEMP_RECEIVER_PRODUCT_ID
+                        : receiverProductId, product.getId());
+            }
         }
     };
 }

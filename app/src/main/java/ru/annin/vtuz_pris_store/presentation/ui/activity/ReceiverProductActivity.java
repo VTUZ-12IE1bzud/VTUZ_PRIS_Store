@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import ru.annin.vtuz_pris_store.R;
 import ru.annin.vtuz_pris_store.data.repository.ReceiverProductRepositoryImpl;
+import ru.annin.vtuz_pris_store.data.repository.SettingRepositoryImpl;
 import ru.annin.vtuz_pris_store.presentation.common.BaseActivity;
 import ru.annin.vtuz_pris_store.presentation.presenter.ReceiverProductPresenter;
 import ru.annin.vtuz_pris_store.presentation.ui.view.ReceiverProductView;
@@ -23,7 +24,8 @@ public class ReceiverProductActivity extends BaseActivity<ReceiverProductPresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receiver_product);
         ReceiverProductViewHolder viewHolder = new ReceiverProductViewHolder(findViewById(R.id.main));
-        presenter = new ReceiverProductPresenter(new ReceiverProductRepositoryImpl());
+        presenter = new ReceiverProductPresenter(new ReceiverProductRepositoryImpl(),
+                new SettingRepositoryImpl(this));
         presenter.setViewHolder(viewHolder);
         presenter.setView(this);
         presenter.onInitialization();

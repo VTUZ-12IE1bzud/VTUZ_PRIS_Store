@@ -3,6 +3,7 @@
     <!-- Global -->
     <string name="app_name">Склад (ПрИС)</string>
     <string name="msg_list_empty">Список пуст</string>
+    <string name="error_field_empty">Заполните поля</string>
     <string name="action_save">Сохранить</string>
 
     <!-- Activity's -->
@@ -42,7 +43,7 @@
     <string name="hint_date">Дата</string>
 
     <!-- Product -->
-    <string name="item_amount_product_list_format">Количество: %1$f (%2$s)</string>
+    <string name="item_amount_product_list_format">Количество: %1$s (%2$s)</string>
     <string name="title_alert_product">Товар</string>
     <string name="hint_amount_product">Количество</string>
     <string name="action_alert_product_positive">Сохранить</string>

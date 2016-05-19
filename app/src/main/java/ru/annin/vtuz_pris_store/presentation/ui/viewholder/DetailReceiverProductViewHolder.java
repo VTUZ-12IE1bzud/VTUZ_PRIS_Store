@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.EditText;
 
@@ -68,14 +69,17 @@ public class DetailReceiverProductViewHolder extends BaseViewHolder {
         // Setup
         adapter = new ProductListAdapter();
         adapter.setViewEmpty(vEmpty);
+        adapter.setOnClickListener(model -> {if (listener != null) listener.onEditProduct(model.getId());});
         vToolbar.inflateMenu(R.menu.menu_invoice);
         rcList.setAdapter(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(onItemTouchHelper);
+        itemTouchHelper.attachToRecyclerView(rcList);
         RxToolbar.navigationClicks(vToolbar).subscribe(aVoid -> {if (listener != null) listener.onBackClick();});
         RxToolbar.itemClicks(vToolbar).subscribe(menuItem -> {
             if (listener != null) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_save:
-                        listener.onSaveClick();
+                        listener.onSaveClick(edtNameInvoice.getText().toString());
                         break;
                     default: break;
                 }
@@ -115,6 +119,11 @@ public class DetailReceiverProductViewHolder extends BaseViewHolder {
         return this;
     }
 
+    public DetailReceiverProductViewHolder errorNameInvoice(String text) {
+        tilNameInvoice.setError(text);
+        return this;
+    }
+
     public DetailReceiverProductViewHolder showDatePicker(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -143,10 +152,29 @@ public class DetailReceiverProductViewHolder extends BaseViewHolder {
         this.listener = listener;
     }
 
+    private final ItemTouchHelper.SimpleCallback onItemTouchHelper = new ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            final int position = viewHolder.getAdapterPosition();
+            adapter.notifyItemRemoved(position);
+            if (listener != null) {
+                listener.onRemoveProduct(adapter.getItem(position).getId());
+            }
+        }
+    };
+
     public interface OnInteractionListener {
         void onBackClick();
-        void onSaveClick();
+        void onSaveClick(String invoice);
         void onAddClick();
+        void onEditProduct(String productId);
+        void onRemoveProduct(String productId);
         void onDateClick();
         void onDateSelect(Date date);
     }

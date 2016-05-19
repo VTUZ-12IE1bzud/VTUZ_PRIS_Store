@@ -13,6 +13,7 @@ import ru.annin.vtuz_pris_store.domain.model.EmployeeModel;
 import ru.annin.vtuz_pris_store.domain.model.JobPositionModel;
 import ru.annin.vtuz_pris_store.domain.model.NomenclatureModel;
 import ru.annin.vtuz_pris_store.domain.model.OrganizationUnitModel;
+import ru.annin.vtuz_pris_store.domain.model.ReceiverProductModel;
 import ru.annin.vtuz_pris_store.domain.model.TypeOrganizationUnitModel;
 import ru.annin.vtuz_pris_store.domain.model.UnitModel;
 
@@ -52,6 +53,7 @@ public class RealmUtil {
         final String organizationUnitJson = ctx.getString(R.string.default_organization_unit);
         final String employeeJson = ctx.getString(R.string.default_employees);
         final String nomenclatureJson = ctx.getString(R.string.default_nomenclature);
+        final String receiverProduct = ctx.getString(R.string.default_receiver_product);
         getRealm().executeTransactionAsync(realm -> {
             realm.createOrUpdateAllFromJson(UnitModel.class, unitJson);
             realm.createOrUpdateAllFromJson(JobPositionModel.class, jobPositionJson);
@@ -59,6 +61,7 @@ public class RealmUtil {
             realm.createOrUpdateAllFromJson(OrganizationUnitModel.class, organizationUnitJson);
             realm.createOrUpdateAllFromJson(EmployeeModel.class, employeeJson);
             realm.createOrUpdateAllFromJson(NomenclatureModel.class, nomenclatureJson);
+            realm.createOrUpdateAllFromJson(ReceiverProductModel.class, receiverProduct);
         });
     }
 

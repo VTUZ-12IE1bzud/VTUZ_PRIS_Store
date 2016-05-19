@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
@@ -46,6 +47,8 @@ public class ReceiverProductViewHolder extends BaseViewHolder {
         adapter.setViewEmpty(vEmpty);
         adapter.setOnClickListener(model -> {if (listener != null) listener.onItemClick(model);});
         rcList.setAdapter(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(onItemTouchHelper);
+        itemTouchHelper.attachToRecyclerView(rcList);
         RxToolbar.navigationClicks(vToolbar).subscribe(aVoid -> {if (listener != null) listener.onBackClick();});
         RxView.clicks(fabAdd).subscribe(aVoid -> {if (listener != null) listener.onAddClick();});
     }
@@ -59,9 +62,27 @@ public class ReceiverProductViewHolder extends BaseViewHolder {
         this.listener = listener;
     }
 
+    private final ItemTouchHelper.SimpleCallback onItemTouchHelper = new ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            final int position = viewHolder.getAdapterPosition();
+            adapter.notifyItemRemoved(position);
+            if (listener != null) {
+                listener.onRemoveReceiverClick(adapter.getItem(position).getId());
+            }
+        }
+    };
+
     public interface OnInteractionListener {
         void onBackClick();
         void onAddClick();
         void onItemClick(ReceiverProductModel model);
+        void onRemoveReceiverClick(String receiverId);
     }
 }

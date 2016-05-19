@@ -75,8 +75,10 @@ public class ReceiverProductListAdapter extends RealmRecyclerAdapter<ReceiverPro
         }
 
         public ItemViewHolder showDateInvoice(Date date) {
-            String format = SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(date);
-            txtDateInvoice.setText(format);
+            if (date != null) {
+                String format = SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(date);
+                txtDateInvoice.setText(format);
+            }
             return this;
         }
 

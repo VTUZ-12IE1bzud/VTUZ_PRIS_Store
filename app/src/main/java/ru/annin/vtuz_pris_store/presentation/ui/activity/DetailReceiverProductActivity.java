@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import ru.annin.vtuz_pris_store.R;
 import ru.annin.vtuz_pris_store.data.repository.EmployeeRepositoryImpl;
 import ru.annin.vtuz_pris_store.data.repository.OrganizationUnitRepositoryImpl;
+import ru.annin.vtuz_pris_store.data.repository.ProductRepositoryImpl;
 import ru.annin.vtuz_pris_store.data.repository.ReceiverProductRepositoryImpl;
 import ru.annin.vtuz_pris_store.data.repository.SettingRepositoryImpl;
 import ru.annin.vtuz_pris_store.presentation.common.BaseActivity;
@@ -32,7 +33,9 @@ public class DetailReceiverProductActivity extends BaseActivity<DetailReceiverPr
         setContentView(R.layout.activity_detail_receiver_product);
         DetailReceiverProductViewHolder viewHolder = new DetailReceiverProductViewHolder(findViewById(R.id.main));
         presenter = new DetailReceiverProductPresenter(new ReceiverProductRepositoryImpl(),
-                new OrganizationUnitRepositoryImpl(), new EmployeeRepositoryImpl(),
+                new OrganizationUnitRepositoryImpl(),
+                new EmployeeRepositoryImpl(),
+                new ProductRepositoryImpl(),
                 new SettingRepositoryImpl(this));
         presenter.setViewHolder(viewHolder);
         presenter.setView(this);
@@ -61,6 +64,12 @@ public class DetailReceiverProductActivity extends BaseActivity<DetailReceiverPr
     @Override
     public void onProductCreateOpen(DetailProductAlert.OnInteractionListener listener) {
        DetailProductAlert.newInstance(listener)
+                .show(getFragmentManager(), DetailProductAlert.TAG);
+    }
+
+    @Override
+    public void onProductOpen(String productId, DetailProductAlert.OnInteractionListener listener) {
+        DetailProductAlert.newInstance(productId, listener)
                 .show(getFragmentManager(), DetailProductAlert.TAG);
     }
 }
